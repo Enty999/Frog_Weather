@@ -1,0 +1,14 @@
+{
+  "name": "weather-pulse",
+  "version": "1.0.0",
+  "description": "Ứng dụng dự báo thời tiết thông minh & cảnh báo siêu bão khẩn cấp (Vanilla JS + Bootstrap 5)",
+  "type": "module",
+  "scripts": {
+    "dev": "npx -y vite",
+    "build": "npx -y vite build",
+    "preview": "npx -y vite preview"
+  },
+  "keywords": ["weather", "vanillajs", "bootstrap5", "typhoon", "aqi"],
+  "author": "WeatherPulse Team",
+  "license": "MIT"
+}

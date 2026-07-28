@@ -1,0 +1,195 @@
+/* WeatherPulse Base Design System & Theme CSS Tokens */
+:root,
+[data-theme="light"] {
+  --wp-font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  --wp-font-display: 'Outfit', sans-serif;
+
+  /* Light Theme Color Palette (Default) */
+  --wp-bg-dark: #f1f5f9;
+  --wp-bg-card: rgba(255, 255, 255, 0.9);
+  --wp-bg-glass: rgba(255, 255, 255, 0.7);
+  --wp-bg-input: #ffffff;
+  --wp-border-glass: rgba(0, 0, 0, 0.1);
+  --wp-border-input: rgba(0, 0, 0, 0.15);
+
+  --wp-primary: #2563eb;
+  --wp-primary-hover: #1d4ed8;
+  --wp-accent-cyan: #0891b2;
+  --wp-accent-warning: #d97706;
+  --wp-accent-danger: #dc2626;
+  --wp-accent-success: #059669;
+
+  --wp-text-main: #0f172a;
+  --wp-text-muted: #64748b;
+
+  --wp-radius-lg: 1rem;
+  --wp-radius-xl: 1.5rem;
+  --wp-shadow-glow: 0 10px 30px -10px rgba(37, 99, 235, 0.2);
+  --wp-card-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="dark"] {
+  /* Dark Theme Color Palette */
+  --wp-bg-dark: #0b1329;
+  --wp-bg-card: rgba(30, 41, 59, 0.75);
+  --wp-bg-glass: rgba(255, 255, 255, 0.05);
+  --wp-bg-input: rgba(15, 23, 42, 0.8);
+  --wp-border-glass: rgba(255, 255, 255, 0.12);
+  --wp-border-input: rgba(255, 255, 255, 0.18);
+
+  --wp-primary: #3b82f6;
+  --wp-primary-hover: #2563eb;
+  --wp-accent-cyan: #06b6d4;
+  --wp-accent-warning: #f59e0b;
+  --wp-accent-danger: #ef4444;
+  --wp-accent-success: #10b981;
+
+  --wp-text-main: #f8fafc;
+  --wp-text-muted: #94a3b8;
+
+  --wp-shadow-glow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+  --wp-card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--wp-font-primary);
+  background-color: var(--wp-bg-dark);
+  color: var(--wp-text-main);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6, .display-font {
+  font-family: var(--wp-font-display);
+  font-weight: 700;
+  color: var(--wp-text-main);
+}
+
+/* Override Bootstrap .bg-dark to dynamically map to theme background */
+.bg-dark, .bg-dark-subtle {
+  background-color: var(--wp-bg-dark) !important;
+  color: var(--wp-text-main) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Glassmorphism Card Utility */
+.glass-card {
+  background: var(--wp-bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--wp-border-glass);
+  border-radius: var(--wp-radius-lg);
+  box-shadow: var(--wp-card-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.glass-card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--wp-shadow-glow);
+}
+
+/* Semantic Theme Helpers */
+.wp-text-main, .text-light {
+  color: var(--wp-text-main) !important;
+}
+
+.wp-text-muted, .text-muted {
+  color: var(--wp-text-muted) !important;
+}
+
+.wp-input {
+  background: var(--wp-bg-input) !important;
+  color: var(--wp-text-main) !important;
+  border: 1px solid var(--wp-border-input) !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.wp-input::placeholder {
+  color: var(--wp-text-muted) !important;
+  opacity: 0.7;
+}
+
+/* Global Ultra-Smooth Focus States Across All Inputs & Buttons */
+:focus {
+  outline: none !important;
+}
+
+.form-control:focus, .wp-input:focus, .form-select:focus {
+  border-color: var(--wp-primary) !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18) !important;
+  outline: none !important;
+}
+
+.btn:focus, .btn:focus-visible, .btn:active {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25) !important;
+  outline: none !important;
+}
+
+.wp-table {
+  color: var(--wp-text-main) !important;
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--wp-text-main);
+}
+
+.wp-dropdown-menu {
+  background: var(--wp-bg-card) !important;
+  border: 1px solid var(--wp-border-glass) !important;
+  backdrop-filter: blur(12px);
+}
+.wp-dropdown-menu .dropdown-item {
+  color: var(--wp-text-main);
+}
+.wp-dropdown-menu .dropdown-item:hover {
+  background: rgba(37, 99, 235, 0.15);
+  color: var(--wp-primary);
+}
+
+/* Completely Hide All Visible Scrollbars Across All Browsers */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+html, body, #app, .page-wrapper, div, section, main, article, nav, aside {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge */
+}
+
+/* Pulse animation for active alerts */
+@keyframes pulse-danger {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.animate-pulse-danger {
+  animation: pulse-danger 2s infinite;
+}
