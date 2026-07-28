@@ -1,0 +1,29 @@
+/* Scoped CSS for Detail Page (.wp-detail-page) */
+.wp-detail-page {
+  padding-bottom: 0;
+}
+
+.wp-detail-page .metric-tile {
+  background: var(--wp-bg-glass);
+  border: 1px solid var(--wp-border-glass);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--wp-card-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.3s ease;
+}
+
+.wp-detail-page .metric-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--wp-primary);
+  box-shadow: var(--wp-shadow-glow);
+}
+
+.wp-detail-page .radar-map-container {
+  height: 280px;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: var(--wp-bg-dark);
+}

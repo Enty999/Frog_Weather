@@ -1,0 +1,110 @@
+/* Scoped CSS for Home Page (.wp-home-page) */
+.wp-home-page {
+  padding-bottom: 0;
+}
+
+.wp-home-page .home-hero-bg {
+  padding: 3rem 0 2.5rem 0;
+  position: relative;
+  z-index: 100;
+}
+
+/* Parent Widget Wrapper to isolate stacking context */
+.wp-home-page .search-widget-container {
+  position: relative;
+  z-index: 1100;
+}
+
+/* Unified Pill Search Container */
+.wp-home-page .search-box-group {
+  background: var(--wp-bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--wp-border-glass);
+  border-radius: 9999px;
+  padding: 0.35rem 0.4rem 0.35rem 1rem;
+  box-shadow: var(--wp-card-shadow);
+  transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, background 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth Unified 360-degree Focus Halo around the entire search box */
+.wp-home-page .search-box-group:focus-within {
+  border-color: var(--wp-primary) !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2), 0 10px 30px rgba(37, 99, 235, 0.15) !important;
+}
+
+.wp-home-page .search-input {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: var(--wp-text-main) !important;
+  font-size: 1rem;
+  padding: 0.6rem 0.75rem;
+}
+
+.wp-home-page .search-input::placeholder {
+  color: var(--wp-text-muted);
+  opacity: 0.7;
+}
+
+.wp-home-page .btn-search-submit {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff !important;
+  border: none;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wp-home-page .btn-search-submit:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.wp-home-page .city-card-img {
+  height: 120px;
+  object-fit: cover;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+/* High-End Autocomplete Dropdown Menu (Floating ON TOP of everything) */
+.wp-home-page .search-suggestions {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  z-index: 9999 !important;
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  background: var(--wp-bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--wp-border-glass);
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-height: 320px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.wp-home-page .search-suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  color: var(--wp-text-main);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.wp-home-page .search-suggestion-item:hover {
+  background: rgba(37, 99, 235, 0.15);
+  color: var(--wp-primary);
+}

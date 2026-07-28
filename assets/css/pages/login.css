@@ -1,0 +1,33 @@
+/* Scoped CSS for Login Page (.wp-login-page) */
+.wp-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent 40%),
+              radial-gradient(circle at bottom left, rgba(8, 145, 178, 0.12), transparent 40%),
+              var(--wp-bg-dark);
+  transition: background 0.3s ease;
+}
+
+.wp-login-page .login-card {
+  max-width: 420px;
+  width: 100%;
+  padding: 2.5rem;
+  background: var(--wp-bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--wp-border-glass);
+  border-radius: 1.25rem;
+  box-shadow: var(--wp-card-shadow);
+}
+
+.wp-login-page .login-logo-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #2563eb, #0891b2);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+}

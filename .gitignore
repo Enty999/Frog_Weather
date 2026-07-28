@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Biến môi trường (chứa API key — KHÔNG commit)
+.env
+.env.local
+
+# Log & OS
+*.log
+.DS_Store
+
+# Playwright (ảnh chụp kiểm thử tạm)
+.playwright-mcp/

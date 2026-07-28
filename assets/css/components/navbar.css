@@ -1,0 +1,58 @@
+/* Navbar Component CSS (Adaptive Theme & High-Contrast Active State) */
+.wp-navbar {
+  background: var(--wp-bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--wp-border-glass);
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.wp-navbar .nav-link {
+  color: var(--wp-text-muted);
+  font-weight: 500;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.wp-navbar .nav-link:hover {
+  color: var(--wp-primary);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+/* Bold & High-Contrast Active State Highlight */
+.wp-navbar .nav-link.active {
+  color: var(--wp-primary) !important;
+  background: rgba(37, 99, 235, 0.15) !important;
+  font-weight: 700 !important;
+  box-shadow: inset 0 -2px 0 var(--wp-primary);
+}
+
+.wp-navbar .brand-logo {
+  font-family: var(--wp-font-display);
+  font-weight: 800;
+  background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.theme-toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--wp-border-glass);
+  background: var(--wp-bg-glass);
+  color: var(--wp-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(37, 99, 235, 0.15);
+  color: var(--wp-primary);
+}

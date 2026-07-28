@@ -1,0 +1,46 @@
+/* WeatherCard Component CSS (Adaptive Theme & Full Width Stretch) */
+.wp-weather-card {
+  position: relative;
+  overflow: hidden;
+  width: 100% !important;
+  flex: 1 1 100%;
+}
+
+.wp-weather-card .temp-display {
+  font-family: var(--wp-font-display);
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.wp-weather-card .weather-icon-lg {
+  font-size: 3.5rem;
+  color: #fbbf24;
+}
+
+.wp-weather-card .favorite-btn {
+  background: var(--wp-bg-glass);
+  border: 1px solid var(--wp-border-glass);
+  color: var(--wp-text-main);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.wp-weather-card .favorite-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.wp-weather-card .favorite-btn i.bi-star {
+  color: var(--wp-text-muted);
+}
+
+.wp-weather-card .favorite-btn i.bi-star-fill {
+  color: #f59e0b !important;
+}

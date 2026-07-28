@@ -1,0 +1,24 @@
+/* Scoped CSS for AQI Page (.wp-aqi-page) */
+.wp-aqi-page {
+  /* Removed padding-bottom */
+}
+
+.wp-aqi-page .pollutant-card {
+  background: var(--wp-bg-glass);
+  border: 1px solid var(--wp-border-glass);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.wp-aqi-page .advice-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  background: var(--wp-bg-glass);
+  border: 1px solid var(--wp-border-glass);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
