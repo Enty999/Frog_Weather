@@ -1,0 +1,25 @@
+/* AQIGauge Component CSS */
+.wp-aqi-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border: 8px solid;
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.2);
+}
+
+.wp-aqi-good { border-color: #10b981; color: #10b981; }
+.wp-aqi-moderate { border-color: #f59e0b; color: #f59e0b; }
+.wp-aqi-unhealthy { border-color: #ef4444; color: #ef4444; }
+.wp-aqi-hazardous { border-color: #8b5cf6; color: #8b5cf6; }
+
+.wp-aqi-value {
+  font-family: var(--wp-font-display);
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1;
+}

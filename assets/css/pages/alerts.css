@@ -1,0 +1,9 @@
+/* Scoped CSS for Alerts Page (.wp-alerts-page) */
+.wp-alerts-page {
+  /* Removed padding-bottom */
+}
+.wp-alerts-page .alert-map-box {
+  height: 380px;
+  border-radius: 1rem;
+  overflow: hidden;
+}

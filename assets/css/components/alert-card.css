@@ -1,0 +1,15 @@
+/* AlertCard Component CSS */
+.wp-alert-card {
+  border-left: 4px solid var(--wp-accent-danger);
+  background: rgba(239, 68, 68, 0.08);
+}
+.wp-alert-card.warning-level {
+  border-left-color: var(--wp-accent-warning);
+  background: rgba(245, 158, 11, 0.08);
+}
+.wp-alert-badge {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}

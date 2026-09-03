@@ -1,0 +1,12 @@
+/* Scoped CSS for Favorites Page (.wp-favorites-page) */
+.wp-favorites-page {
+  /* Removed padding-bottom */
+}
+
+.wp-favorites-page .fav-grid-item {
+  transition: transform 0.25s ease;
+}
+
+.wp-favorites-page .fav-grid-item:hover {
+  transform: translateY(-4px);
+}

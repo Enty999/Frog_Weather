@@ -1,0 +1,21 @@
+/* Scoped CSS for Typhoon Detail Page (.wp-typhoon-page) */
+.wp-typhoon-page {
+  /* Removed padding-bottom */
+}
+
+.wp-typhoon-page .typhoon-banner-card {
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.wp-typhoon-page .typhoon-map-wrapper {
+  height: 380px;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.wp-typhoon-page .emergency-contact-box {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px dashed rgba(239, 68, 68, 0.4);
+  border-radius: 0.75rem;
+}
