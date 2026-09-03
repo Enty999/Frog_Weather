@@ -3,6 +3,7 @@ import { Navbar } from '../../components/Navbar.js';
 import { Footer } from '../../components/Footer.js';
 import { ROUTES } from '../../config/constants.js';
 import { storageService } from '../../services/storageService.js';
+import { favoritesService } from '../../services/favoritesService.js';
 import { weatherService } from '../../services/weatherService.js';
 import { WeatherCard } from '../../components/WeatherCard.js';
 
@@ -38,7 +39,9 @@ export const favoritesPage = {
       `;
     }
 
-    const favCities = storageService.getFavorites();
+    // Nạp danh sách yêu thích mới nhất từ Supabase vào cache, rồi lấy ra
+    await favoritesService.load();
+    const favCities = favoritesService.getFavorites();
     // Lấy thời tiết thật cho từng thành phố; allSettled để 1 thành phố lỗi không làm vỡ trang
     const results = await Promise.allSettled(
       favCities.map(city => weatherService.getCurrentWeather(city))
@@ -81,13 +84,16 @@ export const favoritesPage = {
 
   afterRender: async () => {
     Navbar.afterRender();
-    WeatherCard.afterRender();
 
-    // Bỏ thích ngay trên trang này -> gỡ thẻ khỏi danh sách
+    // Tự xử lý nút sao của lưới này (async): đánh dấu favBound TRƯỚC để WeatherCard bỏ qua
+    // phần toggle, tránh 2 listener chạy chồng nhau. Trên trang này bỏ sao = gỡ thẻ.
     document.querySelectorAll('#favGrid .btn-fav-toggle').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.dataset.favBound = '1';
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
         const city = btn.getAttribute('data-city');
-        if (!storageService.isFavorite(city)) {
+        const nowFav = await favoritesService.toggleFavorite(city);
+        if (!nowFav) {
           const item = btn.closest('.fav-grid-item');
           if (item) item.remove();
           const grid = document.getElementById('favGrid');
@@ -97,5 +103,8 @@ export const favoritesPage = {
         }
       });
     });
+
+    // Gọi sau để WeatherCard chỉ bind click điều hướng cho thẻ (nút sao đã favBound)
+    WeatherCard.afterRender();
   }
 };

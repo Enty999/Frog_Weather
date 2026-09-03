@@ -1,12 +1,14 @@
 // WeatherCard Component (Clickable Card Navigation, Full Width & Equal Height)
 import { formatTemp, getWeatherIconSvg } from '../utils/formatters.js';
 import { storageService } from '../services/storageService.js';
+import { favoritesService } from '../services/favoritesService.js';
+import { ROUTES } from '../config/constants.js';
 
 export const WeatherCard = {
   // options.interactive === false -> thẻ chỉ hiển thị (không nút sao, không click chuyển trang)
   render: (weatherData, isCompact = false, options = {}) => {
     const interactive = options.interactive !== false;
-    const isFav = storageService.isFavorite(weatherData.name);
+    const isFav = favoritesService.isFavorite(weatherData.name);
     const iconClass = getWeatherIconSvg(weatherData.icon);
 
     // Chỉ gắn điều hướng/con trỏ khi ở chế độ tương tác
@@ -86,16 +88,21 @@ export const WeatherCard = {
     document.querySelectorAll('.btn-fav-toggle').forEach(btn => {
       if (btn.dataset.favBound) return; // tránh gắn trùng khi afterRender chạy nhiều lần
       btn.dataset.favBound = '1';
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', async (e) => {
         e.stopPropagation();
-        const city = btn.getAttribute('data-city');
-        storageService.toggleFavorite(city);
-        const icon = btn.querySelector('i');
-        if (storageService.isFavorite(city)) {
-          icon.className = 'bi bi-star-fill text-warning fs-5';
-        } else {
-          icon.className = 'bi bi-star wp-text-muted fs-5';
+
+        // Bắt buộc đăng nhập mới lưu được -> chưa login thì chuyển sang trang đăng nhập
+        if (!storageService.getUser()) {
+          window.location.hash = ROUTES.LOGIN;
+          return;
         }
+
+        const city = btn.getAttribute('data-city');
+        const nowFav = await favoritesService.toggleFavorite(city);
+        const icon = btn.querySelector('i');
+        icon.className = nowFav
+          ? 'bi bi-star-fill text-warning fs-5'
+          : 'bi bi-star wp-text-muted fs-5';
       });
     });
 

@@ -2,6 +2,7 @@
 import { ROUTES, APP_CONFIG } from '../config/constants.js';
 import { storageService } from '../services/storageService.js';
 import { themeService } from '../services/themeService.js';
+import { authService } from '../services/authService.js';
 
 export const Navbar = {
   render: (overrideRoute = null) => {
@@ -137,8 +138,9 @@ export const Navbar = {
 
     const logoutBtn = document.getElementById('navLogoutBtn');
     if (logoutBtn) {
-      logoutBtn.addEventListener('click', () => {
-        storageService.logout();
+      logoutBtn.addEventListener('click', async () => {
+        // Đăng xuất khỏi cả phiên Supabase lẫn localStorage
+        await authService.logout();
         window.location.hash = ROUTES.HOME;
         window.location.reload();
       });
