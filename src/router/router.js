@@ -2,6 +2,7 @@
 import { ROUTES } from '../config/constants.js';
 import { homePage } from '../pages/homePage/homePage.js';
 import { loginPage } from '../pages/loginPage/loginPage.js';
+import { registerPage } from '../pages/registerPage/registerPage.js';
 import { detailPage } from '../pages/detailPage/detailPage.js';
 import { favoritesPage } from '../pages/favoritesPage/favoritesPage.js';
 import { alertsPage } from '../pages/alertsPage/alertsPage.js';
@@ -12,6 +13,7 @@ import { aqiPage } from '../pages/aqiPage/aqiPage.js';
 const routes = {
   [ROUTES.HOME]: homePage,
   [ROUTES.LOGIN]: loginPage,
+  [ROUTES.REGISTER]: registerPage,
   [ROUTES.DETAIL]: detailPage,
   [ROUTES.FAVORITES]: favoritesPage,
   [ROUTES.ALERTS]: alertsPage,

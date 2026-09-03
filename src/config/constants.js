@@ -2,6 +2,7 @@
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
+  REGISTER: '/register',
   DETAIL: '/detail',
   FAVORITES: '/favorites',
   ALERTS: '/alerts',
@@ -15,13 +16,6 @@ export const APP_CONFIG = {
   VERSION: '1.0.0',
   DEFAULT_CITY: 'Hà Nội'
 };
-
-// Tài khoản demo (xác thực phía client — chỉ dùng cho mục đích demo)
-export const DEMO_ACCOUNTS = [
-  { email: 'admin@weatherpulse.com', password: 'admin123', name: 'Quản trị viên' },
-  { email: 'user@weatherpulse.com', password: 'user123', name: 'Người dùng' },
-  { email: 'demo@weatherpulse.com', password: 'demo123', name: 'Khách Demo' }
-];
 
 // Cấu hình kết nối WeatherAPI.com
 export const API_CONFIG = {

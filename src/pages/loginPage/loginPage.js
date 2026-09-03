@@ -47,6 +47,11 @@ export const loginPage = {
                 Đăng nhập ngay <i class="bi bi-arrow-right me-1"></i>
               </button>
             </form>
+
+            <p class="text-center wp-text-muted small mt-4 mb-0">
+              Chưa có tài khoản?
+              <a href="#${ROUTES.REGISTER}" class="fw-semibold text-decoration-none">Đăng ký</a>
+            </p>
           </div>
         </main>
 
@@ -76,18 +81,25 @@ export const loginPage = {
     const errorText = document.getElementById('loginErrorText');
 
     if (form) {
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        errorBox.classList.add('d-none');
+
         const email = document.getElementById('loginEmail').value;
         const password = pwdInput.value;
 
-        const result = authService.login(email, password);
+        // Vô hiệu hóa nút gửi để tránh double-submit trong lúc chờ mạng
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+
+        const result = await authService.login(email, password);
         if (result.ok) {
           window.location.hash = ROUTES.HOME;
           window.location.reload();
         } else {
           errorText.textContent = result.error;
           errorBox.classList.remove('d-none');
+          if (submitBtn) submitBtn.disabled = false;
         }
       });
     }

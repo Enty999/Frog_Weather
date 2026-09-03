@@ -20,6 +20,37 @@ const writeCache = (key, data) => {
   cache.set(key, { data, time: Date.now() });
 };
 
+// Dựng URL đầy đủ tới weatherapi.com: tự gắn API key rồi thêm các tham số truyền vào.
+const buildUrl = (endpoint, params) => {
+  const url = new URL(`${API_CONFIG.BASE_URL}/${endpoint}`);
+  url.searchParams.set('key', API_CONFIG.API_KEY);
+  for (const [name, value] of Object.entries(params)) {
+    url.searchParams.set(name, String(value));
+  }
+  return url.toString();
+};
+
+// Gọi API và trả JSON, gom toàn bộ xử lý lỗi vào một chỗ:
+// - Lỗi mạng -> báo mất kết nối.
+// - Lỗi từ server (res.ok = false) -> lấy message của weatherapi, hoặc mã lỗi HTTP.
+const fetchJson = async (url) => {
+  let res;
+  try {
+    res = await fetch(url);
+  } catch (networkErr) {
+    throw new Error('Không kết nối được tới máy chủ thời tiết. Kiểm tra mạng và thử lại.');
+  }
+
+  const json = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    // weatherapi trả { error: { code, message } }
+    throw new Error(json?.error?.message || `Lỗi API (mã ${res.status}).`);
+  }
+
+  return json;
+};
+
 export const apiClient = {
   /**
    * Lấy "bundle" đầy đủ cho 1 thành phố trong MỘT request:
@@ -35,56 +66,39 @@ export const apiClient = {
     const query = toApiQuery(cityName);
     const cacheKey = `bundle:${query}`;
 
+    // Đọc cache trước để tránh gọi lại API cho cùng thành phố.
     const cached = readCache(cacheKey);
     if (cached) return cached;
 
-    const url = new URL(`${API_CONFIG.BASE_URL}/forecast.json`);
-    url.searchParams.set('key', API_CONFIG.API_KEY);
-    url.searchParams.set('q', query);
-    url.searchParams.set('days', String(API_CONFIG.FORECAST_DAYS));
-    url.searchParams.set('aqi', 'yes');
-    url.searchParams.set('alerts', 'yes');
-    url.searchParams.set('lang', API_CONFIG.LANG);
+    const url = buildUrl('forecast.json', {
+      q: query,
+      days: API_CONFIG.FORECAST_DAYS,
+      aqi: 'yes',
+      alerts: 'yes',
+      lang: API_CONFIG.LANG
+    });
 
-    let res;
-    try {
-      res = await fetch(url.toString());
-    } catch (networkErr) {
-      throw new Error('Không kết nối được tới máy chủ thời tiết. Kiểm tra mạng và thử lại.');
-    }
-
-    const json = await res.json().catch(() => null);
-
-    if (!res.ok) {
-      // weatherapi trả { error: { code, message } }
-      const message = json?.error?.message || `Lỗi API (mã ${res.status}).`;
-      throw new Error(message);
-    }
-
+    const json = await fetchJson(url);
     writeCache(cacheKey, json);
     return json;
   },
 
   /**
-   * Gợi ý địa điểm (autocomplete) — dùng cho ô tìm kiếm nếu cần.
+   * Gợi ý địa điểm (autocomplete) — dùng cho ô tìm kiếm.
+   * Lỗi được nuốt và trả [] để không làm vỡ UI khi đang gõ.
    * @param {string} term
    * @returns {Promise<Array>} danh sách địa điểm gợi ý
    */
   search: async (term) => {
     if (!API_CONFIG.API_KEY || !term) return [];
-    const url = new URL(`${API_CONFIG.BASE_URL}/search.json`);
-    url.searchParams.set('key', API_CONFIG.API_KEY);
-    // Bỏ dấu: search.json cũng trả sai khi query có dấu tiếng Việt
-    url.searchParams.set('q', removeDiacritics(term));
+
+    // Bỏ dấu: search.json trả sai khi query có dấu tiếng Việt.
+    const url = buildUrl('search.json', { q: removeDiacritics(term) });
+
     try {
-      const res = await fetch(url.toString());
-      if (!res.ok) return [];
-      return await res.json();
+      return await fetchJson(url);
     } catch {
       return [];
     }
-  },
-
-  // Xóa cache (dùng khi cần làm mới thủ công)
-  clearCache: () => cache.clear()
+  }
 };
