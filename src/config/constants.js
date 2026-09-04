@@ -30,7 +30,7 @@ export const API_CONFIG = {
 // (vd query "Da Nang" trỏ nhầm ~17.8,105.9; "Hue" ra sân bay ở Ethiopia).
 // Nhãn hiển thị vẫn là tên tiếng Việt (mapCurrent dùng displayName), không lộ tọa độ.
 // Tên KHÔNG có trong bảng này sẽ được bỏ dấu (removeDiacritics) rồi gửi thẳng.
-export const CITY_QUERY_MAP = {
+const CITY_QUERY_MAP = {
   'Hà Nội': '21.0285,105.8542',
   'TP. Hồ Chí Minh': '10.8231,106.6297',
   'Hồ Chí Minh': '10.8231,106.6297',
@@ -65,7 +65,7 @@ export const toApiQuery = (cityName) => {
 // Mục đích: khi tìm kiếm ra 1 TP đã biết, quy về CÙNG danh tính với thẻ trang chủ
 // để tránh trùng lặp trong Yêu thích (vd "Ho Chi Minh City" == "TP. Hồ Chí Minh").
 // Bonus: "Da Nang" (search trả sai tọa độ) -> "Đà Nẵng" -> đi qua tọa độ chuẩn.
-export const CANONICAL_ALIASES = {
+const CANONICAL_ALIASES = {
   'Ha Noi': 'Hà Nội',
   'Hanoi': 'Hà Nội',
   'Ho Chi Minh City': 'TP. Hồ Chí Minh',

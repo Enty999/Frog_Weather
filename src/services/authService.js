@@ -98,8 +98,5 @@ export const authService = {
         favoritesService.clear();
       }
     });
-  },
-
-  // Đã đăng nhập chưa (đồng bộ — các trang khác dùng pattern này để guard)
-  isAuthenticated: () => !!storageService.getUser()
+  }
 };

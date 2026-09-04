@@ -12,7 +12,6 @@ export const HomeSuggestedSection = {
       <section class="mt-5">
         <div class="d-flex align-items-center justify-content-between mb-3">
           <h4 class="wp-text-main font-display mb-0"><i class="bi bi-globe me-2 text-info"></i>Thành phố nổi tiếng</h4>
-          <!-- <a href="#/favorites" class="btn btn-sm btn-outline-primary rounded-pill">Xem tất cả <i class="bi bi-chevron-right ms-1"></i></a> -->
         </div>
 
         <div class="row g-3 align-items-stretch">

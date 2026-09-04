@@ -31,7 +31,5 @@ export const TyphoonAffectedAreasSection = {
         </div>
       </section>
     `;
-  },
-
-  afterRender: async () => {}
+  }
 };

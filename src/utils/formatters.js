@@ -1,11 +1,6 @@
 // Formatter Utilities
 
-export const formatTemp = (temp, unit = 'C') => {
-  if (unit === 'F') {
-    return `${Math.round((temp * 9) / 5 + 32)}°F`;
-  }
-  return `${Math.round(temp)}°C`;
-};
+export const formatTemp = (temp) => `${Math.round(temp)}°C`;
 
 export const getWeatherIconSvg = (iconName) => {
   const icons = {

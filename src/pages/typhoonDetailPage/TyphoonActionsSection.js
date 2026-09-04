@@ -35,7 +35,5 @@ export const TyphoonActionsSection = {
         </div>
       </section>
     `;
-  },
-
-  afterRender: async () => {}
+  }
 };

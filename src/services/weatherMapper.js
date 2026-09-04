@@ -20,7 +20,7 @@ const CODE_THUNDER = new Set([1087, 1273, 1276, 1279, 1282]);
 // Tuyết/mưa đá: không có icon riêng -> dùng 'cloud'
 const CODE_SNOW = new Set([1114, 1117, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1249, 1252, 1255, 1258, 1261, 1264]);
 
-export const iconFromCode = (code, isDay = 1) => {
+const iconFromCode = (code, isDay = 1) => {
   const day = isDay === 1 || isDay === true;
   if (code === 1000) return day ? 'sun' : 'moon';           // Trời quang
   if (code === 1003) return day ? 'cloud-sun' : 'moon-cloud'; // Có mây rải rác
@@ -32,7 +32,7 @@ export const iconFromCode = (code, isDay = 1) => {
   return day ? 'cloud-sun' : 'moon-cloud'; // fallback an toàn
 };
 
-export const uvLevelVi = (uv) => {
+const uvLevelVi = (uv) => {
   if (uv == null) return '—';
   if (uv < 3) return 'Thấp';
   if (uv < 6) return 'Trung bình';
@@ -41,7 +41,7 @@ export const uvLevelVi = (uv) => {
   return 'Nguy hiểm';
 };
 
-export const windDirVi = (dir) => (dir ? (WIND_DIR_VI[dir] || dir) : '—');
+const windDirVi = (dir) => (dir ? (WIND_DIR_VI[dir] || dir) : '—');
 
 const round = (n, digits = 0) => {
   if (n == null || Number.isNaN(Number(n))) return 0;

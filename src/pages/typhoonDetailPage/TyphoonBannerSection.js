@@ -38,7 +38,5 @@ export const TyphoonBannerSection = {
         </div>
       </section>
     `;
-  },
-
-  afterRender: async () => {}
+  }
 };
