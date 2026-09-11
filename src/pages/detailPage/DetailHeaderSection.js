@@ -7,7 +7,7 @@ export const DetailHeaderSection = {
     const data = await weatherService.getCurrentWeather(cityName);
     return `
       <section class="mb-4">
-        ${WeatherCard.render(data)}
+        ${new WeatherCard(data).render()}
       </section>
     `;
   },

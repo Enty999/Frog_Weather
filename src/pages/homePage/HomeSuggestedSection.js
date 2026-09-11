@@ -1,6 +1,6 @@
 // HomeSuggestedSection (Equal Height 3-Card Layout)
 import { weatherService } from "../../services/weatherService.js";
-import { WeatherCard } from "../../components/WeatherCard.js";
+import { CompactWeatherCard } from "../../components/CompactWeatherCard.js";
 
 export const HomeSuggestedSection = {
   render: async () => {
@@ -16,13 +16,13 @@ export const HomeSuggestedSection = {
 
         <div class="row g-3 align-items-stretch">
           <div class="col-md-4 d-flex">
-            ${WeatherCard.render(tokyo, true, { interactive: false })}
+            ${new CompactWeatherCard(tokyo, { interactive: false }).render()}
           </div>
           <div class="col-md-4 d-flex">
-            ${WeatherCard.render(london, true, { interactive: false })}
+            ${new CompactWeatherCard(london, { interactive: false }).render()}
           </div>
           <div class="col-md-4 d-flex">
-            ${WeatherCard.render(ny, true, { interactive: false })}
+            ${new CompactWeatherCard(ny, { interactive: false }).render()}
           </div>
         </div>
       </section>

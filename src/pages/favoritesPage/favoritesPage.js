@@ -69,7 +69,7 @@ export const favoritesPage = {
                 const data = weatherByCity[cityName] || { name: cityName, country: '', temp: 0, humidity: 0, windSpeed: 0, icon: 'cloud', condition: 'Không có dữ liệu' };
                 return `
                   <div class="col-md-6 col-lg-4 fav-grid-item d-flex">
-                    ${WeatherCard.render(data, false)}
+                    ${new WeatherCard(data).render()}
                   </div>
                 `;
               }).join('')}
@@ -88,19 +88,20 @@ export const favoritesPage = {
     // Tự xử lý nút sao của lưới này (async): đánh dấu favBound TRƯỚC để WeatherCard bỏ qua
     // phần toggle, tránh 2 listener chạy chồng nhau. Trên trang này bỏ sao = gỡ thẻ.
     document.querySelectorAll('#favGrid .btn-fav-toggle').forEach(btn => {
+      if (btn.dataset.favBound) return;
       btn.dataset.favBound = '1';
       btn.addEventListener('click', async (e) => {
         e.stopPropagation();
-        const city = btn.getAttribute('data-city');
-        const nowFav = await favoritesService.toggleFavorite(city);
-        if (!nowFav) {
-          const item = btn.closest('.fav-grid-item');
-          if (item) item.remove();
-          const grid = document.getElementById('favGrid');
-          if (grid && grid.querySelectorAll('.fav-grid-item').length === 0) {
-            grid.outerHTML = emptyStateMarkup();
+        await WeatherCard.handleFavoriteClick(btn, (nowFav) => {
+          if (!nowFav) {
+            const item = btn.closest('.fav-grid-item');
+            if (item) item.remove();
+            const grid = document.getElementById('favGrid');
+            if (grid && grid.querySelectorAll('.fav-grid-item').length === 0) {
+              grid.outerHTML = emptyStateMarkup();
+            }
           }
-        }
+        });
       });
     });
 

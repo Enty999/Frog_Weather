@@ -47,14 +47,7 @@ export const Navbar = {
             <span class="brand-logo fs-4">WeatherPulse</span>
           </a>
 
-          <div class="d-flex align-items-center gap-2 ms-auto me-2 d-lg-none">
-            <!-- Mobile Theme Switcher -->
-            <button class="theme-toggle-btn btn-theme-toggle" title="Chuyển đổi giao diện Sáng/Tối">
-              <i class="bi ${currentTheme === 'dark' ? 'bi-sun-fill text-warning' : 'bi-moon-stars-fill text-primary'}"></i>
-            </button>
-          </div>
-
-          <button class="navbar-toggler border-secondary text-body" type="button" data-bs-toggle="collapse" data-bs-target="#wpNavbarNav">
+          <button class="navbar-toggler border-secondary text-body" type="button" data-bs-toggle="collapse" data-bs-target="#wpNavbarNav" aria-controls="wpNavbarNav" aria-expanded="false" aria-label="Mở menu điều hướng">
             <span class="navbar-toggler-icon"></span>
           </button>
 
@@ -98,30 +91,32 @@ export const Navbar = {
               </li>
             </ul>
 
-            <div class="d-flex align-items-center gap-2">
-              <!-- Desktop Theme Switcher Button -->
-              <button class="theme-toggle-btn btn-theme-toggle d-none d-lg-flex" title="Chuyển đổi giao diện Sáng/Tối">
+          </div>
+
+            <div class="wp-navbar-actions d-flex align-items-center">
+              <!-- Các nút tài khoản và giao diện luôn nằm trên hàng đầu -->
+              <button class="theme-toggle-btn btn-theme-toggle" title="Chuyển đổi giao diện Sáng/Tối">
                 <i class="bi ${currentTheme === 'dark' ? 'bi-sun-fill text-warning' : 'bi-moon-stars-fill text-primary'}"></i>
               </button>
 
               ${user ? `
                 <div class="dropdown">
-                  <button class="btn btn-outline-primary dropdown-toggle rounded-pill px-3 py-1 text-truncate" style="max-width: 160px;" type="button" data-bs-toggle="dropdown">
-                    <i class="bi bi-person-circle me-1"></i> ${user.email.split('@')[0]}
+                  <button class="btn btn-outline-primary dropdown-toggle rounded-pill px-3 py-1 text-truncate wp-account-toggle" style="max-width: 160px;" type="button" data-bs-toggle="dropdown" aria-label="Mở menu tài khoản" aria-expanded="false">
+                    <i class="bi bi-person-circle" aria-hidden="true"></i><span class="d-none d-lg-inline ms-1">${user.email.split('@')[0]}</span>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end wp-dropdown-menu">
+                    <li class="d-lg-none"><span class="dropdown-header text-truncate wp-account-name">${user.email.split('@')[0]}</span></li>
                     <li><a class="dropdown-item" href="#${ROUTES.FAVORITES}"><i class="bi bi-star me-2"></i>Địa điểm đã lưu</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><button class="dropdown-item text-danger" id="navLogoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</button></li>
                   </ul>
                 </div>
               ` : `
-                <a href="#${ROUTES.LOGIN}" class="btn btn-primary rounded-pill px-4 ${isLoginActive ? 'd-none' : ''}">
-                  <i class="bi bi-box-arrow-in-right me-1"></i> Đăng nhập
+                <a href="#${ROUTES.LOGIN}" class="btn btn-primary rounded-pill px-4 wp-login-link ${isLoginActive ? 'd-none' : ''}" aria-label="Đăng nhập" title="Đăng nhập">
+                  <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i><span class="d-none d-lg-inline ms-1">Đăng nhập</span>
                 </a>
               `}
             </div>
-          </div>
         </div>
       </nav>
     `;

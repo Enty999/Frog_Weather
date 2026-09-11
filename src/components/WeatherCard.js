@@ -1,13 +1,18 @@
-// WeatherCard Component (Clickable Card Navigation, Full Width & Equal Height)
+// Class cha: thẻ thời tiết đầy đủ và hành vi dùng chung cho các loại thẻ.
 import { formatTemp, getWeatherIconSvg } from '../utils/formatters.js';
 import { storageService } from '../services/storageService.js';
 import { favoritesService } from '../services/favoritesService.js';
 import { ROUTES } from '../config/constants.js';
 
-export const WeatherCard = {
-  // options.interactive === false -> thẻ chỉ hiển thị (không nút sao, không click chuyển trang)
-  render: (weatherData, isCompact = false, options = {}) => {
-    const interactive = options.interactive !== false;
+export class WeatherCard {
+  constructor(weatherData, options = {}) {
+    this.weatherData = weatherData;
+    this.interactive = options.interactive !== false;
+  }
+
+  // Chuẩn bị dữ liệu giao diện dùng chung cho thẻ đầy đủ và thẻ rút gọn.
+  getRenderData() {
+    const { weatherData, interactive } = this;
     const isFav = favoritesService.isFavorite(weatherData.name);
     const iconClass = getWeatherIconSvg(weatherData.icon);
 
@@ -17,32 +22,16 @@ export const WeatherCard = {
       : '';
     const interactiveClass = interactive ? ' glass-card-interactive' : '';
     const starBtn = interactive ? `
-              <button class="favorite-btn btn-fav-toggle" data-city="${weatherData.name}" title="Thêm vào yêu thích">
+              <button class="favorite-btn btn-fav-toggle" type="button" data-city="${weatherData.name}" aria-pressed="${isFav}" title="${isFav ? 'Bỏ yêu thích' : 'Thêm vào yêu thích'}">
                 <i class="bi ${isFav ? 'bi-star-fill text-warning' : 'bi-star wp-text-muted'} fs-5"></i>
               </button>` : '';
 
-    if (isCompact) {
-      return `
-        <div class="glass-card${interactiveClass} p-4 wp-weather-card${navAttrs} w-100 h-100 d-flex flex-column justify-content-between">
-          <div>
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <div>
-                <h4 class="mb-0 fw-bold wp-text-main font-display">${weatherData.name}</h4>
-                <small class="wp-text-muted">${weatherData.country}</small>
-              </div>${starBtn}
-            </div>
-            <div class="d-flex align-items-center justify-content-between my-3">
-              <span class="temp-display fs-1 fw-bold wp-text-main">${formatTemp(weatherData.temp)}</span>
-              <i class="bi ${iconClass}" style="font-size: 3rem;"></i>
-            </div>
-          </div>
-          <div class="pt-2 border-top border-secondary border-opacity-25 d-flex justify-content-between text-muted small">
-            <span><i class="bi bi-water text-info me-1"></i>Ẩm ${weatherData.humidity}%</span>
-            <span><i class="bi bi-wind text-primary me-1"></i>Gió ${weatherData.windSpeed} km/h</span>
-          </div>
-        </div>
-      `;
-    }
+    return { weatherData, iconClass, navAttrs, interactiveClass, starBtn };
+  }
+
+  // Hiển thị thẻ đầy đủ; class con sẽ ghi đè phương thức này.
+  render() {
+    const { weatherData, iconClass, navAttrs, starBtn } = this.getRenderData();
 
     return `
       <div class="glass-card p-4 wp-weather-card${navAttrs} w-100 h-100 d-flex flex-column justify-content-between">
@@ -81,9 +70,43 @@ export const WeatherCard = {
         </div>
       </div>
     `;
-  },
+  }
 
-  afterRender: () => {
+  // Dùng chung cho nút sao ở trang chi tiết và danh sách yêu thích.
+  static async handleFavoriteClick(btn, onSuccess = () => {}) {
+    if (btn.disabled) return;
+    if (!storageService.getUser()) {
+      window.location.hash = ROUTES.LOGIN;
+      return;
+    }
+
+    const card = btn.closest('.wp-weather-card');
+    card?.querySelector('.favorite-error')?.remove();
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    try {
+      const nowFav = await favoritesService.toggleFavorite(btn.getAttribute('data-city'));
+      const icon = btn.querySelector('i');
+      icon.className = nowFav
+        ? 'bi bi-star-fill text-warning fs-5'
+        : 'bi bi-star wp-text-muted fs-5';
+      btn.setAttribute('aria-pressed', String(nowFav));
+      btn.title = nowFav ? 'Bỏ yêu thích' : 'Thêm vào yêu thích';
+      onSuccess(nowFav);
+    } catch (error) {
+      const message = document.createElement('p');
+      message.className = 'favorite-error text-danger small mt-2 mb-0';
+      message.setAttribute('role', 'alert');
+      message.textContent = error.message || 'Không cập nhật được yêu thích. Vui lòng thử lại.';
+      card?.append(message);
+    } finally {
+      btn.disabled = false;
+      btn.removeAttribute('aria-busy');
+    }
+  }
+
+  // Gắn sự kiện cho các thẻ đã có trong DOM, dùng chung cho cả hai class.
+  static afterRender() {
     // Nút sao yêu thích (chỉ có trên thẻ tương tác)
     document.querySelectorAll('.btn-fav-toggle').forEach(btn => {
       if (btn.dataset.favBound) return; // tránh gắn trùng khi afterRender chạy nhiều lần
@@ -91,18 +114,7 @@ export const WeatherCard = {
       btn.addEventListener('click', async (e) => {
         e.stopPropagation();
 
-        // Bắt buộc đăng nhập mới lưu được -> chưa login thì chuyển sang trang đăng nhập
-        if (!storageService.getUser()) {
-          window.location.hash = ROUTES.LOGIN;
-          return;
-        }
-
-        const city = btn.getAttribute('data-city');
-        const nowFav = await favoritesService.toggleFavorite(city);
-        const icon = btn.querySelector('i');
-        icon.className = nowFav
-          ? 'bi bi-star-fill text-warning fs-5'
-          : 'bi bi-star wp-text-muted fs-5';
+        await WeatherCard.handleFavoriteClick(btn);
       });
     });
 
@@ -116,4 +128,4 @@ export const WeatherCard = {
       });
     });
   }
-};
+}

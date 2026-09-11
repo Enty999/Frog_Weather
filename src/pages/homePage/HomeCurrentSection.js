@@ -12,10 +12,10 @@ export const HomeCurrentSection = {
         <h4 class="wp-text-main font-display mb-3"><i class="bi bi-geo-alt-fill text-primary me-2"></i>Vị trí hiện tại của bạn</h4>
         <div class="row g-4 align-items-stretch">
           <div class="col-md-6 d-flex">
-            ${WeatherCard.render(saigonData, false, { interactive: false })}
+            ${new WeatherCard(saigonData, { interactive: false }).render()}
           </div>
           <div class="col-md-6 d-flex">
-            ${WeatherCard.render(hanoiData, false, { interactive: false })}
+            ${new WeatherCard(hanoiData, { interactive: false }).render()}
           </div>
         </div>
       </section>
